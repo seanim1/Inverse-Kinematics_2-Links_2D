@@ -1,3 +1,4 @@
 body {
+    /* This fixes mobile touchscreen drag problem */    
     touch-action: none;
 }

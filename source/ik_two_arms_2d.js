@@ -3,10 +3,11 @@ const raycaster = new THREE.Raycaster();
 const P = new THREE.Vector2( );
 const P1 = new THREE.Vector2( );
 const P2 = new THREE.Vector2( );
-let L1 = 1.5
-let L2 = 2
-let R1 = 0
-let R2 = 0
+let L1 = 1.5;
+let L2 = 2;
+let R1 = 0;
+let R2 = 0;
+let flipJoint = false;
 
 // GUI controller
 import { GUI } from '../libs/lil-gui.esm.min.js';
@@ -15,16 +16,19 @@ const gui = new GUI();
 
 const armsController = {
     Arm_1_Length: L1,
-    Arm_2_Length: L2
+    Arm_2_Length: L2,
+    Reverse_Joint: flipJoint
 };
 
 const valuesChanger = function () {
     L1 = armsController.Arm_1_Length;
     L2 = armsController.Arm_2_Length;
+    flipJoint = armsController.Reverse_Joint;
 }
 
 gui.add( armsController, 'Arm_1_Length', 0.2, 2.1, 0.01 ).onChange( valuesChanger );
 gui.add( armsController, 'Arm_2_Length', 0.2, 2.1, 0.01 ).onChange( valuesChanger );
+gui.add( armsController, 'Reverse_Joint', 0.2, 2.1, 0.01 ).onChange( valuesChanger );
 
 valuesChanger();
 
@@ -230,7 +234,11 @@ function animate() {
 
     // < Inverse Kinematics: Solving for R1, R2, given P, L1, L2 >
     // 	- First, solve for R2
-    R2 = Math.acos( ( Math.pow(P.x, 2) + Math.pow(P.y, 2) - Math.pow(L1, 2) - Math.pow(L2, 2) ) / ( 2*L1*L2 ) );
+    if ( flipJoint ) {
+        R2 = Math.acos( ( Math.pow(P.x, 2) + Math.pow(P.y, 2) - Math.pow(L1, 2) - Math.pow(L2, 2) ) / ( -2*L1*L2 ) ) - Math.PI;
+    } else {
+        R2 = Math.acos( ( Math.pow(P.x, 2) + Math.pow(P.y, 2) - Math.pow(L1, 2) - Math.pow(L2, 2) ) / ( 2*L1*L2 ) );
+    }
     // 	- Then, solve for R1
     R1 = Math.atan( ( P.y / P.x ) ) - Math.atan( ( L2*Math.sin(R2) ) / ( L1 + L2*Math.cos(R2) ) );
     //		- Doing Trigonometries so it works with 360 degrees...
