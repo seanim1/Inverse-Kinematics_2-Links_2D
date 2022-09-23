@@ -28,7 +28,7 @@ const valuesChanger = function () {
 
 gui.add( armsController, 'Arm_1_Length', 0.2, 2.1, 0.01 ).onChange( valuesChanger );
 gui.add( armsController, 'Arm_2_Length', 0.2, 2.1, 0.01 ).onChange( valuesChanger );
-gui.add( armsController, 'Reverse_Joint', 0.2, 2.1, 0.01 ).onChange( valuesChanger );
+gui.add( armsController, 'Reverse_Joint' ).onChange( valuesChanger );
 
 valuesChanger();
 
