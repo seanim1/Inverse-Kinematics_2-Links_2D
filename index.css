@@ -29,12 +29,19 @@ body {
 }
 
 #Back_to_Website:hover {
-	font-size: 1em;
+	font-size: 1.2em;
+}
+
+#GitHub {
+	color: lightblue;
+}
+#GitHub:hover {
+	color: violet;
 	font-size: 1.2em;
 }
 
 a:link {
-    color: lightblue;
+    color: lightgreen;
 }
 
 a:visited {

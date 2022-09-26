@@ -1,3 +1,5 @@
+import * as THREE from '../libs/three.module.js';
+
 // Global variables
 const raycaster = new THREE.Raycaster();
 const P = new THREE.Vector2( );
